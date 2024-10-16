@@ -1,54 +1,33 @@
 {
   "name" : "@bohtho/node-red-contrib-ozw",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
-    "pako":          "^2.1.0",
-    "tar-stream":    "^3.1.6",
-    "mustache":      "^4.2.0",
-    "libnpmpublish": "^9.0.0",
-    "streamx":       "^2.15.5",
-    "got":           "^13",
-    "pacote":        "^17.0.4",
-    "otpauth":       "^5.0.8",
-    "file-type":     ">=18.7.0"
   },
 
+  "description": "This Node-RED node handles communication with the Siemens OZW family of KNX gateways via HTTP.",
   "keywords": [
-    "node-red", 
-    "node development", 
-    "introspection", 
-    "bootstrapping", 
-    "recursion"
+    "node-red"
   ],
 
-  "homepage": "https://flowhub.org/f/b92be5062203ff69",
   "license": "Don't do evil.",
-  "author": "Gerrit Riessen <gerrit@openmindmap.org> (https://spread-the.love)",
+  "homepage": "https://github.com/bohtho/node-red-contrib-ozw#readme",
+  "author": "Thomas B <tmbohm@gmail.com>",
   "engines": {
-    "node": ">=8"
+    "node": ">=14"
   },
 
   "node-red" : {
     "version": ">=3.0.0",
-    "plugins": {
-      "nodefactory_sidebar": "plugins/node-factory-sidebar.html"
-    },
+
+
     "nodes": {
-      "nodedevops":     "nodes/05-node-dev-ops.js",
-      "nodefactory":    "nodes/10-node-factory.js",
-      "pkgfile":        "nodes/20-pkg-file.js",
-      "npmtarball":     "nodes/30-npm-tarball.js",
-      "noderedinstall": "nodes/40-node-red-install.js",
-      "npmpublish":     "nodes/50-npm-publish.js",
-      "otpgenerator":   "nodes/60-otp-generator.js",
-      "nodefactorycfg": "nodes/node-factory-sidebar-cfg.js"
+       "node-red-contrib-ozw": "nodes/node-red-contrib-ozw.js"
     }
   },
 
-  "description": "Support the development of Node-RED nodes within Node-RED.",
   "repository": {
-    "type": "github",
-    "url": "git+https://github.com/bohtho/node-red-contrib-ozw.git"
+    "type": "git",
+    "url": "https://github.com/bohtho/node-red-contrib-ozw.git"
   },
   "bugs": {
     "url": "https://github.com/bohtho/node-red-contrib-ozw"

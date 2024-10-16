@@ -1,0 +1,14 @@
+{
+  "node-red-contrib-ozw": {
+
+
+    "label": {
+      "statusset": "Status Set"
+    },
+
+    "status": {
+      "waiting": "Waiting for Godot",
+      "timeout": "No more time to waiting"
+    }
+  }
+}
