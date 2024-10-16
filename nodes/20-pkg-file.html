@@ -1,0 +1,291 @@
+<script type="text/html" data-template-name="PkgFile">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <div style="display: inline-block; width: calc(100% - 105px)"><input type="text" id="node-input-name" placeholder="Name"></div>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-filename"><i class="fa fa-tag"></i> Filename</label>
+        <div style="display: inline-block; width: calc(100% - 105px)"><input type="text" id="node-input-filename" placeholder="dir1/dir2/file.txt"></div>
+    </div>
+
+    <div class="form-row" style="position: relative; margin-bottom: 0px;">
+        <label for="node-input-template"><i class="fa fa-file-code-o"></i> Template</span></label>
+        <input type="hidden" id="node-input-template" autofocus="autofocus">
+        <div style="position: absolute; right:0;display:inline-block; text-align: right; font-size: 0.8em;">
+            Syntax:
+            <select id="node-input-format" style="width:110px; font-size: 10px !important;  height: 24px; padding:0;">
+                <option value="handlebars">mustache</option>
+                <option value="html">HTML</option>
+                <option value="json">JSON</option>
+                <option value="javascript">JavaScript</option>
+                <option value="css">CSS</option>
+                <option value="markdown">Markdown</option>
+                <option value="php">PHP</option>
+                <option value="python">Python</option>
+                <option value="sql">SQL</option>
+                <option value="yaml">YAML</option>
+                <option value="xml">XML</option>
+                <option value="base64">Base64</option>
+                <option value="text">Text</option>
+                <option value="typescript">TypeScript</option>
+                <option value="python">Python</option>
+                <option value="go">Go</option>
+                <option value="plaintext">Plain Text</option>
+                <option value="abap">abap</option>
+                <option value="apex">Apex</option>
+                <option value="azcli">Azure CLI</option>
+                <option value="bat">Batch</option>
+                <option value="bicep">Bicep</option>
+                <option value="cameligo">Cameligo</option>
+                <option value="clojure">clojure</option>
+                <option value="coffeescript">CoffeeScript</option>
+                <option value="c">C</option>
+                <option value="cpp">C++</option>
+                <option value="csharp">C#</option>
+                <option value="csp">CSP</option>
+                <option value="css">CSS</option>
+                <option value="cypher">Cypher</option>
+                <option value="dart">Dart</option>
+                <option value="dockerfile">Dockerfile</option>
+                <option value="ecl">ECL</option>
+                <option value="elixir">Elixir</option>
+                <option value="flow9">Flow9</option>
+                <option value="freemarker2">FreeMarker2</option>
+                <option value="freemarker2.tag-angle.interpolation-dollar">FreeMarker2 (Angle&#x2F;Dollar)</option>
+                <option value="freemarker2.tag-bracket.interpolation-dollar">FreeMarker2 (Bracket&#x2F;Dollar)</option>
+                <option value="freemarker2.tag-angle.interpolation-bracket">FreeMarker2 (Angle&#x2F;Bracket)</option>
+                <option value="freemarker2.tag-bracket.interpolation-bracket">FreeMarker2 (Bracket&#x2F;Bracket)</option>
+                <option value="freemarker2.tag-auto.interpolation-dollar">FreeMarker2 (Auto&#x2F;Dollar)</option>
+                <option value="freemarker2.tag-auto.interpolation-bracket">FreeMarker2 (Auto&#x2F;Bracket)</option>
+                <option value="fsharp">F#</option>
+                <option value="go">Go</option>
+                <option value="graphql">GraphQL</option>
+                <option value="handlebars">Handlebars</option>
+                <option value="hcl">Terraform</option>
+                <option value="html">HTML</option>
+                <option value="ini">Ini</option>
+                <option value="java">Java</option>
+                <option value="javascript">JavaScript</option>
+                <option value="json">JSON</option>
+                <option value="julia">julia</option>
+                <option value="kotlin">Kotlin</option>
+                <option value="less">Less</option>
+                <option value="lexon">Lexon</option>
+                <option value="liquid">Liquid</option>
+                <option value="lua">Lua</option>
+                <option value="m3">Modula-3</option>
+                <option value="markdown">Markdown</option>
+                <option value="mdx">MDX</option>
+                <option value="mips">MIPS</option>
+                <option value="msdax">DAX</option>
+                <option value="mysql">MySQL</option>
+                <option value="objective-c">Objective-C</option>
+                <option value="pascal">Pascal</option>
+                <option value="pascaligo">Pascaligo</option>
+                <option value="perl">Perl</option>
+                <option value="pgsql">PostgreSQL</option>
+                <option value="php">PHP</option>
+                <option value="pla">pla</option>
+                <option value="postiats">ATS</option>
+                <option value="powerquery">PQ</option>
+                <option value="powershell">PowerShell</option>
+                <option value="proto">protobuf</option>
+                <option value="pug">Pug</option>
+                <option value="python">Python</option>
+                <option value="qsharp">Q#</option>
+                <option value="r">R</option>
+                <option value="razor">Razor</option>
+                <option value="redis">redis</option>
+                <option value="redshift">Redshift</option>
+                <option value="restructuredtext">reStructuredText</option>
+                <option value="ruby">Ruby</option>
+                <option value="rust">Rust</option>
+                <option value="sb">Small Basic</option>
+                <option value="scala">Scala</option>
+                <option value="scheme">scheme</option>
+                <option value="scss">Sass</option>
+                <option value="shell">Shell</option>
+                <option value="sol">sol</option>
+                <option value="aes">aes</option>
+                <option value="sparql">sparql</option>
+                <option value="sql">SQL</option>
+                <option value="st">StructuredText</option>
+                <option value="swift">Swift</option>
+                <option value="systemverilog">SV</option>
+                <option value="verilog">V</option>
+                <option value="tcl">tcl</option>
+                <option value="twig">Twig</option>
+                <option value="typescript">TypeScript</option>
+                <option value="typespec">TypeSpec</option>
+                <option value="vb">Visual Basic</option>
+                <option value="wgsl">WebGPU Shading Language</option>
+                <option value="xml">XML</option>
+                <option value="yaml">YAML</option>
+                <option value="jsonata">jsonata</option>
+            </select>
+            <button type="button" id="node-pkgfile-expand-editor" class="red-ui-button red-ui-button-small"><i class="fa fa-expand"></i></button>
+        </div>
+    </div>
+
+    <div class="form-row node-text-editor-row">
+        <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-pkgfile-editor" ></div>
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-syntax"><i class="fa fa-code"></i> Syntax</label>
+        <select id="node-input-syntax" style="width:180px;">
+            <option value="mustache">Mustache</option>
+            <option value="plain">Plain</option>
+        </select>
+    </div>
+
+</script>
+
+<script type="text/javascript">
+(function(){
+
+    var returnInfo = (that) => {
+        const escapeHTML = str =>
+            str.replace(
+                /[&<>'"]/g,
+                tag =>
+                ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag] || tag)
+            );
+
+        let mth;
+        
+        switch(that.format) {
+            case 'markdown':
+            case 'text':
+                return that.template
+                
+            case "json":
+            case "yaml":
+            case "javascript":
+            case "css":
+            case "sql":
+                return ["```" + that.format, that.template, "```"].join("\n")
+
+            case "php":
+            case "python":
+            case "html":
+                return ["```" + that.format, escapeHTML(that.template), "```"].join("\n")
+                
+            case "xml":
+                mth = (that.filename || "").match(/[.](svg)$/i)
+                if ( mth ) {
+                    return "<img src=\"data:image/svg+xml;base64," + btoa(that.template) + "\"/>"
+                }
+                break;
+
+            case "base64":
+                mth = (that.filename || "").match(/[.](png|jpg|jpeg|tiff|tif|gif|ico)$/i)
+                if ( mth ) {
+                    return "<img src=\"data:image/" + mth[1].toLowerCase() + ";base64," + that.template + "\"/>"
+                }
+                break;
+        }
+        
+        return ""
+    };
+
+    RED.nodes.registerType('PkgFile',{
+        color:"#e5e4ef",
+        category: 'nodedev',
+        defaults: {
+            name: {value:""},
+            filename: { value: ""},
+            dirname: { value: "" },
+            format: {value:"handlebars"},
+            syntax: {value:"mustache"},
+            template: {value:""},
+            output: {value:"str"},
+        },
+
+        inputs:1,
+        outputs:1,
+        icon: "font-awesome/fa-file-o",
+        info: function() { return returnInfo(this) },
+
+        label: function() {
+            return this.name || this.filename || this._def.paletteLabel;
+        },
+
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        },
+
+        oneditprepare: function() {
+            const that = this;
+            const stateId = RED.editor.generateViewStateId("node", this, "");
+
+            if (!this.syntax) {
+                this.syntax = 'mustache';
+                $("#node-input-syntax").val(this.syntax);
+            }
+
+            this.editor = RED.editor.createEditor({
+                id: 'node-input-pkgfile-editor',
+                mode: 'ace/mode/html',
+                stateId: stateId,
+                value: $("#node-input-template").val()
+            });
+
+            $("#node-input-format").on("change", function() {
+                var mod = "ace/mode/"+$("#node-input-format").val();
+                that.editor.getSession().setMode({
+                    path: mod,
+                    v: Date.now()
+                });
+            });
+            RED.popover.tooltip($("#node-pkgfile-expand-editor"), RED._("node-red:common.label.expand"));
+            $("#node-pkgfile-expand-editor").on("click", function (e) {
+                e.preventDefault();
+                const value = that.editor.getValue();
+                that.editor.saveView();
+                RED.editor.editText({
+                    mode: $("#node-input-format").val(),
+                    value: value,
+                    stateId: stateId,
+                    width: "Infinity",
+                    focus: true,
+                    complete: function (v, cursor) {
+                        that.editor.setValue(v, -1);
+                        setTimeout(function () {
+                            that.editor.restoreView();
+                            that.editor.focus();
+                        }, 250);
+                    }
+                })
+            })
+        },
+        oneditsave: function() {
+            $("#node-input-template").val(this.editor.getValue());
+            this.editor.destroy();
+            delete this.editor;
+        },
+        oneditcancel: function() {
+            this.editor.destroy();
+            delete this.editor;
+        },
+        oneditresize: function(size) {
+            var rows = $("#dialog-form>div:not(.node-text-editor-row)");
+            var height = $("#dialog-form").height();
+            for (var i=0; i<rows.length; i++) {
+                height -= $(rows[i]).outerHeight(true);
+            }
+            var editorRow = $("#dialog-form>div.node-text-editor-row");
+            height -= (parseInt(editorRow.css("marginTop"))+parseInt(editorRow.css("marginBottom")));
+            $("#dialog-form .node-text-editor").css("height",height+"px");
+            this.editor.resize();
+        }
+    });
+})();
+</script>

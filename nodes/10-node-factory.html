@@ -1,0 +1,434 @@
+<script type="text/html" data-template-name="NodeFactory">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <div style="display: inline-block; width: calc(100% - 105px)"><input type="text" id="node-input-name" placeholder="Name"></div>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-nodename"><i class="fa fa-tag"></i> Node Name</label>
+        <div style="display: inline-block; width: calc(100% - 105px)"><input type="text" id="node-input-nodename" placeholder="Node Name">
+        </div>
+    </div> 
+
+    <div class="form-row">
+        <label for="node-input-category"><i class="fa fa-tag"></i> Node Category</label>
+        <div style="display: inline-block; width: calc(100% - 105px)"><input type="text" id="node-input-category" placeholder="Node Category">
+        </div>
+    </div>
+
+    <div id="node-input-row-style-colour" class="form-row">
+        <label>Color</label>
+     </div>
+
+    <div id="node-input-row-icon-picker" class="form-row">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-hasbutton">
+            <span>Has button?</span>
+        </label>
+        <input type="checkbox" id="node-input-hasbutton" style="display:inline-block; width:15px; vertical-align:baseline;">
+
+        <label for="node-input-minify">
+            <span>Minify by default?</span>
+        </label>
+        <input type="checkbox" id="node-input-minify" style="margin-left: 10px; display:inline-block; width:15px; vertical-align:baseline;">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-hasinput">
+            <span>Has input port?</span>
+        </label>
+        <input type="checkbox" id="node-input-hasinput" style="display:inline-block; width:15px; vertical-align:baseline;">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-outputcount">
+            <i class="fa fa-tag"></i> Output ports
+          </label>
+        <select id="node-input-outputcount"></select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-summary">
+          <i class="fa fa-tag"></i>
+          <span>Summary (REQUIRED)</span>
+        </label>
+        <div style="height: 150px; min-height:150px; max-height: 150px;" class="node-text-editor" id="node-input-summary">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-description">
+              <i class="fa fa-tag"></i>
+              <span>Description (REQUIRED)</span>
+            </label>
+        <div style="height: 350px; min-height:350px; max-height: 350px;" class="node-text-editor" id="node-input-description">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-isrealplugin" style="min-width: 250px;">
+           <span>Plugin?</span>
+        </label>
+        <input type="checkbox" id="node-input-isrealplugin" style="display:inline-block; width:15px; vertical-align:baseline;">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-isplugin" style="min-width: 250px;">
+            <span>Sidebar + Config?</span>
+        </label>
+        <input type="checkbox" id="node-input-isplugin" style="display:inline-block; width:15px; vertical-align:baseline;">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-frt2bakcomm" style="min-width: 250px;">
+           <span>Frontend to Backend communication?</span>
+        </label>
+        <input type="checkbox" id="node-input-frt2bakcomm" style="display:inline-block; width:15px; vertical-align:baseline;">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-bak2frtcomm" style="min-width: 250px;">
+                <span>Backend to Frontend communication?</span>
+            </label>
+        <input type="checkbox" id="node-input-bak2frtcomm" style="display:inline-block; width:15px; vertical-align:baseline;">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-createmanifest" style="min-width: 250px;">
+                <span>Create manifest?</span>
+            </label>
+        <input type="checkbox" id="node-input-createmanifest" style="display:inline-block; width:15px; vertical-align:baseline;">
+    </div>
+
+    <div class="form-row">
+        <button id="node-input-generate-tmplnodes-but"
+                     class="red-ui-button">Generate Template Nodes</button>
+    </div>
+
+</script>
+
+<script type="text/html" data-help-name="NodeFactory">
+    <p>Generate node templates providing starting points for node development</p>
+    The Node-Factory can be used to create example code for various types of Node-RED nodes.
+</script>
+
+<script type="text/javascript">
+(function () {
+
+    RED.comms.subscribe("nodedev:perform-autoimport-nodes", (event,data) => {
+        if ( data.msg == "notify") {
+            RED.notify(data.text, {
+                type:    data.type,
+                id:      data.id || "NodeFactory",
+                timeout: data.timeout || 2000
+            });
+        }
+
+        if ( data.msg == "autoimport" ) {
+            setTimeout(() => {
+                RED.clipboard.import();
+            
+                setTimeout(() => {
+                    $('#red-ui-clipboard-dialog-import-text').val(
+                    data.payload
+                    ).trigger("paste");
+                }, 300);
+            },400)
+        }
+    });
+
+    function postDataOff(node,data) {
+        $.ajax({
+            url: "NodeFactory/" + node.id,
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+
+            data: JSON.stringify({
+                node: data,
+            }),
+
+            success: function (resp) {
+                $('#node-dialog-ok').trigger('click');
+
+                RED.notify("Preparing Node...", {
+                    type: "warning",
+                    timeout: 2000
+                });
+            },
+
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status == 404) {
+                    RED.notify("Node has not yet been deployed, please deploy.", "error");
+                } else if (jqXHR.status == 405) {
+                    RED.notify("Not Allowed.", "error");
+                } else if (jqXHR.status == 500) {
+                    RED.notify(node._("common.notification.error", {
+                        message: node._("inject.errors.failed")
+                    }), "error");
+                } else if (jqXHR.status == 0) {
+                    RED.notify(node._("common.notification.error", {
+                        message: node._("common.notification.errors.no-response")
+                    }), "error");
+                } else {
+                    RED.notify(node._("common.notification.error", {
+                        message: node._("common.notification.errors.unexpected", {
+                            status: jqXHR.status, message: textStatus
+                        })
+                    }), "error");
+                }
+            }
+        });
+    }
+
+    function doSubmission(node) {
+        let data = {};
+
+        /* the data has not been stored on the node when this is called, 
+            need to retrieve everything from the various fields...
+        */
+        data["summary"]     = node.editorSummary.getValue();
+        data["description"] = node.editorDesc.getValue();
+        
+        data["color"]       = $('#node-input-colour').val();
+        data["icon"]        = $('#red-ui-editor-node-icon').val();
+        data["iconclass"]   = "fa " + data["icon"].split("/")[1]; /* Assume font-awesomeness */
+        data["name"]        = $('#node-input-nodename').val();
+        data["namelwr"]     = data["name"].toLowerCase();
+        data["outputcount"] = $('#node-input-outputcount').val();
+        data["category"]    = $('#node-input-category').val();
+
+        data["hasbutton"]      = $('#node-input-hasbutton').is(":checked");
+        data["minify"]         = $('#node-input-minify').is(":checked");
+        data["hasinput"]       = $('#node-input-hasinput').is(":checked");
+        data["bak2frtcomm"]    = $('#node-input-bak2frtcomm').is(":checked");
+        data["frt2bakcomm"]    = $('#node-input-frt2bakcomm').is(":checked");
+        data["createmanifest"] = $('#node-input-createmanifest').is(":checked");
+        
+        /*
+            Argh! This is a mess but I can't change it because isplugin is used
+            in the wild. isplugin is actually a sidebar + config node, while
+            isrealplugin is a plugin in the true sense of Node-RED. This was
+            done due to lack-of-knowledge on the part of the author.
+        */
+        data["isplugin"]       = $('#node-input-isplugin').is(":checked");
+        data["isrealplugin"]   = $('#node-input-isrealplugin').is(":checked");
+
+        data["__task"]      = "generate_from_templates";
+
+        postDataOff(node,data)        
+    }
+
+    function doButtonSubmission(node) {
+        let data = {}
+
+        Object.keys(node._def.defaults).forEach( attrname => {
+            data[attrname] = node[attrname]
+        })
+
+        data["name"]      = node.nodename; // name clashes with the default 'name' attribute
+        data["namelwr"]   = data["name"].toLowerCase();
+        data["iconclass"] = "fa " + data["icon"].split("/")[1]; /* Assume font-awesomeness */
+        data["__task"]    = "generate_from_templates";
+        
+        postDataOff(node,data)
+    }
+
+    RED.nodes.registerType('NodeFactory', {
+        color: "#e5e4ef",
+        category: 'nodedev',
+        defaults: {
+            name:           { value: "" },
+            nodename:       { value: "", required: true },
+            color:          { value: "#e5e4ef" },
+            hasbutton:      { value: false },
+            minify:         { value: false },
+            hasinput:       { value: true },
+            outputcount:    { value: 1 },
+            category:       { value: "" },
+            summary:        { value: "", required: true },
+            description:    { value: "", required: true },
+            icon:           { value: "font-awesome/fa-industry" },
+            frt2bakcomm:    { value: false },
+            bak2frtcomm:    { value: false },
+            createmanifest: { value: false },
+            isplugin:       { value: false },
+            isrealplugin:   { value: false },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-industry",
+        label: function () {
+            return this.name || this._def.paletteLabel;
+        },
+        labelStyle: function () {
+            return this.name ? "node_label_italic" : "";
+        },
+        oneditprepare: function () {
+            const that = this;
+            const stateId = RED.editor.generateViewStateId("node", this, "");
+
+            var sltObj = $('#node-input-outputcount');
+            sltObj.html("");
+            
+            [0,1,2,3,4,5,6,7,8,9,10].forEach( function(v) {
+                sltObj.append($('<option></option>').val(v).html(v));
+            });
+            
+            sltObj.val(this.outputcount || "1");
+
+            $('#node-input-generate-tmplnodes-but').on('click', (e) => {
+                e.preventDefault()
+                doSubmission(that)
+            });
+
+            var colorPalette = [
+                "#DDAA99",
+                "#3FADB5", "#87A980", "#A6BBCF",
+                "#AAAA66", "#C0C0C0", "#C0DEED",
+                "#C7E9C0", "#D7D7A0", "#D8BFD8",
+                "#DAC4B4", "#DEB887", "#DEBD5C",
+                "#E2D96E", "#E6E0F8", "#E7E7AE",
+                "#E9967A", "#F3B567", "#FDD0A2",
+                "#FDF0C2", "#FFAAAA", "#FFCC66",
+                "#FFF0F0", "#FFFFFF"
+            ];
+
+            RED.editor.colorPicker.create({
+                id: "node-input-colour",
+                value: this.color || "#a4a4a4",
+                defaultValue: "#a4a4a4",
+                palette: colorPalette,
+                cellWidth: 16,
+                cellHeight: 16,
+                cellMargin: 3,
+                none: false,
+                opacity: 1.0,
+                sortPalette: function (a, b) { return a.l - b.l; }
+            }).appendTo("#node-input-row-style-colour");
+
+            $("#node-input-isrealplugin").on('change', function(ev) {
+                if ( $('#node-input-isrealplugin').is(":checked") ) {
+                    $('#node-input-isplugin').prop('checked',false).trigger('change')
+                    $('#node-input-frt2bakcomm').prop('checked',false).trigger('change')
+                    $('#node-input-bak2frtcomm').prop('checked',false).trigger('change')
+                }
+            })
+
+            $("#node-input-isplugin").on('change', function(ev) {
+                if ( $('#node-input-isplugin').is(":checked") ) {
+                    $('#node-input-isrealplugin').prop('checked',false).trigger('change')
+                }
+            })
+
+            $("#node-input-colour").on('change', function(ev) {
+                var colour = $(this).val();
+                var nodeDiv = $('.red-ui-search-result-node')
+                nodeDiv.css('backgroundColor',colour);
+                var borderColor = RED.utils.getDarkerColor(colour);
+                if (borderColor !== colour) {
+                        nodeDiv.css('border-color',borderColor);
+                }
+            });
+
+            this.editorSummary = RED.editor.createEditor({
+               id: 'node-input-summary',
+               mode: 'ace/mode/markdown',
+               value: $("#node-input-summary").val()
+            });
+
+            this.editorDesc = RED.editor.createEditor({
+                id: 'node-input-description',
+                mode: 'ace/mode/markdown',
+                value: $("#node-input-description").val()
+            });
+
+            var node = this;
+            var iconRow = $('#node-input-row-icon-picker');
+            $('<label data-i18n="editor.settingIcon">').appendTo(iconRow);
+
+            var iconButton = $('<button type="button" class="red-ui-button red-ui-editor-node-appearance-button">').appendTo(iconRow);
+            $('<i class="fa fa-caret-down"></i>').appendTo(iconButton);
+            var nodeDiv = $('<div>',{class:"red-ui-search-result-node"}).appendTo(iconButton);
+            var colour = this.color || RED.utils.getNodeColor(node.type, node._def);
+            var icon_url = RED.utils.getNodeIcon(node._def,node);
+            nodeDiv.css('backgroundColor',colour);
+            var borderColor = RED.utils.getDarkerColor(colour);
+            if (borderColor !== colour) {
+                nodeDiv.css('border-color',borderColor);
+            }
+
+            var iconContainer = $('<div/>',{class:"red-ui-palette-icon-container"}).appendTo(nodeDiv);
+            RED.utils.createIconElement(icon_url, iconContainer, true);
+
+            iconButton.on("click", function(e) {
+                e.preventDefault();
+                var iconPath;
+                var icon = $("#red-ui-editor-node-icon").val()||"";
+                if (icon) {
+                    iconPath = RED.utils.separateIconPath(icon);
+                } else {
+                    iconPath = RED.utils.getDefaultNodeIcon(node._def, node);
+                }
+                var backgroundColor = RED.utils.getNodeColor(node.type, node._def);
+                if (node.type === "subflow") {
+                    backgroundColor = $("#red-ui-editor-node-color").val();
+                }
+                RED.editor.iconPicker.show(iconButton,backgroundColor,iconPath,false,function(newIcon) {
+                    $("#red-ui-editor-node-icon").val(newIcon||"");
+                    var icon_url = RED.utils.getNodeIcon(node._def,{type:node.type,icon:newIcon});
+                    RED.utils.createIconElement(icon_url, iconContainer, true);
+                });
+            });
+
+            RED.popover.tooltip(iconButton, function() {
+                return $("#red-ui-editor-node-icon").val() || RED._("editor.default");
+            });
+            $('<input type="hidden" id="red-ui-editor-node-icon">').val(node.icon).appendTo(iconRow);
+        },
+        
+        oneditsave: function () {
+            this.color = $('#node-input-colour').val();
+            $("#node-input-summary").val(this.editorSummary.getValue());
+            $("#node-input-description").val(this.editorDesc.getValue());
+            this.icon = $('#red-ui-editor-node-icon').val();
+
+            this.editorSummary.destroy();
+            this.editorDesc.destroy();
+            delete this.editorSummary;
+            delete this.editorDesc;
+        },
+
+        oneditcancel: function () {
+            this.editorSummary.destroy();
+            this.editorDesc.destroy();
+            delete this.editorSummary;
+            delete this.editorDesc;
+        },
+
+        onpaletteremove: function() {
+        },
+
+        oneditresize: function (size) {
+        },
+
+        button: {
+            enabled: function() {
+                return !this.changed
+            },
+
+            onclick: function () {
+                if (this.changed) {
+                    return RED.notify(RED._("notification.warning", {
+                        message: RED._("notification.warnings.undeployedChanges")
+                    }), "warning");
+                }
+
+                doButtonSubmission(this)
+            }
+        },
+    });
+})();
+
+</script>

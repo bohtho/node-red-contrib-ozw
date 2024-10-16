@@ -1,0 +1,32 @@
+<script type="text/javascript">
+(function ($) {
+   RED.nodes.registerType('NodeFactorySidebarCfg', {
+      category: 'config',
+      hasUsers: false,
+      defaults: {
+         pkgname: { value: "node-red-dashboard" },
+         pkgversion: { value: "latest" },
+         /* otp stuff */
+         otptype: { value: "totp" },
+         algorithm: { value: "SHA1"},
+         secret: { value: "OTP_SECRET"},
+         secretType: { value: "env"},
+         issuer: { value: ""},
+         otplabel: { value: ""},
+         digits: { value: 6 },
+         counter: { value: 0 },
+         period: { value: 30 }
+      },
+      paletteLabel: 'PackageImporter',
+      label: function () {
+         return "PackageImporter"
+      }
+  });
+})(jQuery);
+</script>
+
+<!-- The html for the config node info panel (in right sidebar) -->
+<script type="text/x-red" data-template-name="NodeFactorySidebarCfg">
+    <p>Generate nodes for an existing node package.</p>
+   Generate nodes for an existing node package.
+</script>
